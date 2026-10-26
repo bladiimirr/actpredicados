@@ -1,105 +1,86 @@
-"""
-Practica: Desarrollo de predicados
-Instituto Tecnologico de Ensenada - Programacion Logica y funcional 2026-1
-Elaborada por: Guillermo Guzman Mendoza, Bladimir Nava Vergara
-"""
+from collections import defaultdict
 
-# ============================================================
-# PASO 1: Hechos base por animal
-# ============================================================
 
 hechos = {
-    "guepardo": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": True,
-        "ColorLeonado": True,
-        "TieneManchas": True,
-        "TieneRayas": False,
-    },
-    "tigre": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": True,
-        "ColorLeonado": True,
-        "TieneManchas": False,
-        "TieneRayas": True,
-    },
-    "jirafa": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": False,
-        "TienePezunas": True,
-        "CuelloLargo": True,
-        "TieneManchas": True,
-        "TieneRayas": False,
-    },
-    "cebra": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": False,
-        "TienePezunas": True,
-        "CuelloLargo": False,
-        "TieneManchas": False,
-        "TieneRayas": True,
-    },
-    "pinguino": {
-        "TienePlumas": True,
-        "Vuela": False,
-        "PoneHuevos": True,
-        "Nada": True,
-        "BlancoYNegro": True,
-        "VuelaMuyBien": False,
-    },
-    "albatros": {
-        "TienePlumas": True,
-        "Vuela": True,
-        "PoneHuevos": True,
-        "Nada": False,
-        "BlancoYNegro": False,
-        "VuelaMuyBien": True,
-    },
-    "gato": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": True,
-        "TamanoPequeno": True,
-        "MechonesEnOrejas": False,
-        "ViveConHumanos": True,
-        "ViveEnEstadoSalvaje": False,
-    },
-    "caracal": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": True,
-        "TamanoPequeno": False,
-        "MechonesEnOrejas": True,
-        "ViveConHumanos": False,
-        "ViveEnEstadoSalvaje": True,
-    },
-    "lobo": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": True,
-        "TieneHocicoGrande": True,
-        "VidaSalvajeEnManada": True,
-    },
-    "perro": {
-        "TienePelo": True,
-        "DaLeche": True,
-        "ComeCarne": True,
-        "TieneHocicoGrande": False,
-        "VidaSalvajeEnManada": False,
-        "Perro": True,
-    },
+    
+    ("guepardo", "TienePelo", True),
+    ("guepardo", "DaLeche", True),
+    ("guepardo", "ComeCarne", True),
+    ("guepardo", "ColorLeonado", True),
+    ("guepardo", "TieneManchas", True),
+    ("guepardo", "TieneRayas", False),
+
+    ("tigre", "TienePelo", True),
+    ("tigre", "DaLeche", True),
+    ("tigre", "ComeCarne", True),
+    ("tigre", "ColorLeonado", True),
+    ("tigre", "TieneManchas", False),
+    ("tigre", "TieneRayas", True),
+
+    ("jirafa", "TienePelo", True),
+    ("jirafa", "DaLeche", True),
+    ("jirafa", "ComeCarne", False),
+    ("jirafa", "TienePezunas", True),
+    ("jirafa", "CuelloLargo", True),
+    ("jirafa", "TieneManchas", True),
+    ("jirafa", "TieneRayas", False),
+   
+    ("cebra", "TienePelo", True),
+    ("cebra", "DaLeche", True),
+    ("cebra", "ComeCarne", False),
+    ("cebra", "TienePezunas", True),
+    ("cebra", "CuelloLargo", False),
+    ("cebra", "TieneManchas", False),
+    ("cebra", "TieneRayas", True),
+  
+    ("pinguino", "TienePlumas", True),
+    ("pinguino", "Vuela", False),
+    ("pinguino", "PoneHuevos", True),
+    ("pinguino", "Nada", True),
+    ("pinguino", "BlancoYNegro", True),
+    ("pinguino", "VuelaMuyBien", False),
+  
+    ("albatros", "TienePlumas", True),
+    ("albatros", "Vuela", True),
+    ("albatros", "PoneHuevos", True),
+    ("albatros", "Nada", False),
+    ("albatros", "BlancoYNegro", False),
+    ("albatros", "VuelaMuyBien", True),
+  
+    ("gato", "TienePelo", True),
+    ("gato", "DaLeche", True),
+    ("gato", "ComeCarne", True),
+    ("gato", "TamanoPequeno", True),
+    ("gato", "MechonesEnOrejas", False),
+    ("gato", "ViveConHumanos", True),
+    ("gato", "ViveEnEstadoSalvaje", False),
+  
+    ("caracal", "TienePelo", True),
+    ("caracal", "DaLeche", True),
+    ("caracal", "ComeCarne", True),
+    ("caracal", "TamanoPequeno", False),
+    ("caracal", "MechonesEnOrejas", True),
+    ("caracal", "ViveConHumanos", False),
+    ("caracal", "ViveEnEstadoSalvaje", True),
+
+    ("lobo", "TienePelo", True),
+    ("lobo", "DaLeche", True),
+    ("lobo", "ComeCarne", True),
+    ("lobo", "TieneHocicoGrande", True),
+    ("lobo", "VidaSalvajeEnManada", True),
+
+   
+    ("perro", "TienePelo", True),
+    ("perro", "DaLeche", True),
+    ("perro", "ComeCarne", True),
+    ("perro", "TieneHocicoGrande", False),
+    ("perro", "VidaSalvajeEnManada", False),
+    ("perro", "Perro", True),
 }
 
 
-# ============================================================
-# PASO 2: Vinculos entre hechos (relacion jerarquica como tuplas)
-# ============================================================
 
-vinculos_jerarquia = [
+vinculos_jerarquia = {
     ("Animal", "Mamifero"),
     ("Animal", "Ave"),
     ("Mamifero", "Carnivoro"),
@@ -114,70 +95,87 @@ vinculos_jerarquia = [
     ("Ungulado", "Cebra"),
     ("Ave", "Pinguino"),
     ("Ave", "Albatros"),
-]
+}
 
 
-# ============================================================
-# PASO 3: Predicados / reglas como funciones
-# ============================================================
+atributos = defaultdict(dict)
+for animal, atributo, valor in hechos:
+    atributos[animal][atributo] = valor
 
-def get(animal, caracteristica):
-    """Busca una caracteristica de un animal; si no existe, regresa False."""
-    return hechos.get(animal, {}).get(caracteristica, False)
+jerarquia_hijos = defaultdict(list)
+jerarquia_padre = {}
+for padre, hijo in vinculos_jerarquia:
+    jerarquia_hijos[padre].append(hijo)
+    jerarquia_padre[hijo] = padre
+
+
+def get(animal, atributo):
+    """Consulta directa O(1) de un atributo de un animal.""" 
+    return atributos.get(animal, {}).get(atributo, False)
+
+
+def consultar(s=None, p=None, o=None):
+     
+    return [
+        (a, b, c)
+        for (a, b, c) in hechos
+        if s in (None, a) and p in (None, b) and o in (None, c)
+    ]
+
 
 
 def Mamifero(animal):
-    """Regla 1 y 2: tiene pelo O da leche a sus crias"""
+  
     return get(animal, "TienePelo") or get(animal, "DaLeche")
 
 
 def Ave(animal):
-    """Regla 3 y 4: tiene plumas O (vuela Y pone huevos)"""
+ 
     return get(animal, "TienePlumas") or (get(animal, "Vuela") and get(animal, "PoneHuevos"))
 
 
 def Carnivoro(animal):
-    """Regla 5: es mamifero Y come carne"""
+   
     return Mamifero(animal) and get(animal, "ComeCarne")
 
 
 def Ungulado(animal):
-    """Regla 6: es mamifero Y tiene pezunas"""
+  
     return Mamifero(animal) and get(animal, "TienePezunas")
 
 
 def Guepardo(animal):
-    """Regla 7: carnivoro Y color leonado Y manchas"""
+    
     return Carnivoro(animal) and get(animal, "ColorLeonado") and get(animal, "TieneManchas")
 
 
 def Tigre(animal):
-    """Regla 8: carnivoro Y rayas negras"""
+   
     return Carnivoro(animal) and get(animal, "TieneRayas")
 
 
 def Jirafa(animal):
-    """Regla 9: ungulado Y cuello largo Y manchas"""
+   
     return Ungulado(animal) and get(animal, "CuelloLargo") and get(animal, "TieneManchas")
 
 
 def Cebra(animal):
-    """Regla 10: ungulado Y rayas negras"""
+  
     return Ungulado(animal) and get(animal, "TieneRayas")
 
 
 def Pinguino(animal):
-    """Regla 11: ave Y nada Y blanco y negro"""
+    
     return Ave(animal) and get(animal, "Nada") and get(animal, "BlancoYNegro")
 
 
 def Albatros(animal):
-    """Regla 12: ave Y vuela muy bien"""
+   
     return Ave(animal) and get(animal, "VuelaMuyBien")
 
 
 def Gato(animal):
-    """Entrevista 1: carnivoro Y tamano pequeno Y NO tiene mechones en orejas"""
+    
     return (
         Carnivoro(animal)
         and get(animal, "TamanoPequeno")
@@ -186,7 +184,7 @@ def Gato(animal):
 
 
 def Caracal(animal):
-    """Entrevista 1: carnivoro Y tiene mechones en orejas Y vive en estado salvaje"""
+    
     return (
         Carnivoro(animal)
         and get(animal, "MechonesEnOrejas")
@@ -195,23 +193,19 @@ def Caracal(animal):
 
 
 def Lobo(animal):
-    """Entrevista 2: tiene hocico grande, O (carnivoro Y vive en manada salvaje)"""
+    
     regla_hocico = get(animal, "TieneHocicoGrande")
     regla_manada = Carnivoro(animal) and get(animal, "VidaSalvajeEnManada")
     return regla_hocico or regla_manada
 
 
 def Perro(animal):
-    """Hecho base directo (el documento no formaliza una regla derivada)"""
+    
     return get(animal, "Perro")
 
 
-# ============================================================
-# PASO 4: Consultas de comprobacion
-# ============================================================
-
 def main():
-    print("=== Clasificacion de animales segun las reglas de la practica ===\n")
+    print(" Clasificacion de animales \n")
 
     consultas = [
         ("guepardo", Guepardo, "Guepardo"),
@@ -229,6 +223,14 @@ def main():
     for animal, funcion, nombre_regla in consultas:
         resultado = funcion(animal)
         print(f"{nombre_regla}('{animal}') -> {resultado}")
+
+    print("\nEjemplos de consulta por patron \n")
+    print("Atributos de 'lobo':", consultar(s="lobo"))
+    print("\nQuienes tienen rayas (True):", consultar(p="TieneRayas", o=True))
+
+    print("\n Ejemplo de indice jerarquico derivado \n")
+    print("Hijos de 'Carnivoro':", jerarquia_hijos["Carnivoro"])
+    print("Padre de 'Lobo':", jerarquia_padre["Lobo"])
 
 
 if __name__ == "__main__":
